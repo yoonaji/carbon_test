@@ -1,23 +1,22 @@
 package initializers
 
 import (
+	"fmt"
+	"log"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-func ConnectToDB() {
+func ConnectDB(config *Config) {
 	var err error
-	dsn := "host=localhost user=postgres dbname=transaction sslmode=disable password=0000 port=5432"
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Seoul", config.DBHost, config.DBUserName, config.DBUserPassword, config.DBName, config.DBPort)
+
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("DB 연결 실패: " + err.Error())
+		log.Fatal("Failed to connect to the Database")
 	}
-
-	// AutoMigrate 추가
-	err = DB.AutoMigrate(&transaction.TransactionModel{})
-	if err != nil {
-		panic("DB 마이그레이션 실패: " + err.Error())
-	}
+	fmt.Println("🚀 Connected Successfully to the Database")
 }
