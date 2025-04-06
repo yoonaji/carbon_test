@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/wpcodevo/golang-gorm-postgres/models"
+	"github.com/yoonaji/carbon/models"
 	"gorm.io/gorm"
 )
 

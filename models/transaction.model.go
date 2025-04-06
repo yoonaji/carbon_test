@@ -25,6 +25,16 @@ type CreateTransactionRequest struct {
 	UserID            string `json:"user_id" binding:"required"`
 }
 
+type webhook struct {
+	TransactionType   string `json:"transaction_type" binding:"required"`
+	BankAccountID     string `json:"bank_account_id" binding:"required"`
+	BankAccountNumber string `json:"bank_account_number" binding:"required"`
+	BankCode          string `json:"bank_code" binding:"required"`
+	Amount            int    `json:"amount" binding:"required"`
+	TransactionDate   string `json:"transaction_date" binding:"required"` // 또는 time.Time
+	TransactionName   string `json:"transaction_name" binding:"required"`
+}
+
 type UpdateTransaction struct {
 	TransactionType   string  `json:"transaction_type"`
 	BankAccountID     string  `json:"bank_account_id"`
