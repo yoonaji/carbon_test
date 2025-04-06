@@ -23,7 +23,7 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 	}
 
 	// 예: 필요한 필드 추출
-	request := models.CreateTransactionRequest{
+	request := models.Webhook{
 		TransactionType:   fmt.Sprintf("%v", rawData["transaction_type"]),
 		BankAccountID:     fmt.Sprintf("%v", rawData["bank_account_id"]),
 		BankAccountNumber: fmt.Sprintf("%v", rawData["bank_account_number"]),
@@ -31,10 +31,13 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 		Amount:            int(rawData["amount"].(float64)), // float64 → int 변환
 		TransactionDate:   fmt.Sprintf("%v", rawData["transaction_date"]),
 		TransactionName:   fmt.Sprintf("%v", rawData["transaction_name"]),
-		UserID:            fmt.Sprintf("%v", rawData["user_id"]),
 	}
 
-	// 👉 CreateTransaction에 직접 넘겨주기
-	tc := controllers.TransactionController{DB: initializers.DB}
-	tc.CreateTransactionFromWebhook(ctx, request)
+	if err := initializers.DB.Create(&request).Error; err != nil {
+		ctx.JSON(500, gin.H{"message": "DB 저장 실패", "error": err.Error()})
+		return
+	}
+
+	ctx.JSON(201, gin.H{"message": "거래내역 저장 성공"})
+
 }

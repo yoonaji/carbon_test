@@ -25,7 +25,7 @@ type CreateTransactionRequest struct {
 	UserID            string `json:"user_id" binding:"required"`
 }
 
-type webhook struct {
+type Webhook struct {
 	TransactionType   string `json:"transaction_type" binding:"required"`
 	BankAccountID     string `json:"bank_account_id" binding:"required"`
 	BankAccountNumber string `json:"bank_account_number" binding:"required"`
