@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yoonaji/carbon/controllers"
-	"github.com/yoonaji/carbon/middleware"
+	//"github.com/yoonaji/carbon/middleware"
 )
 
 type TransactionRouteController struct {
@@ -17,7 +17,7 @@ func NewRouteTransactionController(TransactionController controllers.Transaction
 func (pc *TransactionRouteController) TransactionRoute(rg *gin.RouterGroup) {
 
 	router := rg.Group("transactions")
-	router.Use(middleware.DeserializeUser())
+	//router.Use(middleware.DeserializeUser())
 	router.POST("/import", pc.TransactionController.CreateTransaction)
 	router.GET("/list", pc.TransactionController.FindTransactions)
 	router.GET("", pc.TransactionController.FindTransactionById)

@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	config, err := initializers.LoadConfig(".")
+	config, err := initializers.LoadConfig("..")
 	if err != nil {
 		log.Fatal("🚀 Could not load environment variables", err)
 	}
@@ -19,6 +19,6 @@ func init() {
 
 func main() {
 	initializers.DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
-	initializers.DB.AutoMigrate(&models.User{}, &models.Post{})
+	initializers.DB.AutoMigrate(&models.TransactionModel{}, &models.WebhookTransaction{})
 	fmt.Println("👍 Migration complete")
 }

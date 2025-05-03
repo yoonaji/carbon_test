@@ -18,7 +18,7 @@ func NewTransactionController(DB *gorm.DB) TransactionController {
 }
 
 func (pc *TransactionController) CreateTransaction(ctx *gin.Context) {
-	currentUser := ctx.MustGet("currentUser").(models.User)
+	//currentUser := ctx.MustGet("currentUser").(models.User)
 	var payload *models.CreateTransactionRequest
 
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
@@ -41,7 +41,7 @@ func (pc *TransactionController) CreateTransaction(ctx *gin.Context) {
 		TransactionName:   payload.TransactionName,
 		Category:          "",
 		CarbonScore:       0.0,
-		UserID:            currentUser.ID.String(),
+		UserID:            payload.UserID, //currentUser.ID.String(),
 	}
 
 	result := pc.DB.Create(&newTransaction)

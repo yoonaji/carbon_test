@@ -6,21 +6,17 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/wpcodevo/golang-gorm-postgres/controllers"
-	"github.com/wpcodevo/golang-gorm-postgres/initializers"
-	"github.com/wpcodevo/golang-gorm-postgres/routes"
+	"github.com/yoonaji/carbon/controllers"
+	"github.com/yoonaji/carbon/initializers"
+	"github.com/yoonaji/carbon/routes"
 )
 
 var (
-	server              *gin.Engine
-	AuthController      controllers.AuthController
-	AuthRouteController routes.AuthRouteController
-
-	UserController      controllers.UserController
-	UserRouteController routes.UserRouteController
-
-	PostController      controllers.PostController
-	PostRouteController routes.PostRouteController
+	server                     *gin.Engine
+	TransactionController      controllers.TransactionController
+	TransactionRouteController routes.TransactionRouteController
+	WebhookController          controllers.WebhookController
+	WebhookRouteController     routes.WebhookRouteController
 )
 
 func init() {
@@ -31,14 +27,10 @@ func init() {
 
 	initializers.ConnectDB(&config)
 
-	AuthController = controllers.NewAuthController(initializers.DB)
-	AuthRouteController = routes.NewAuthRouteController(AuthController)
-
-	UserController = controllers.NewUserController(initializers.DB)
-	UserRouteController = routes.NewRouteUserController(UserController)
-
-	PostController = controllers.NewPostController(initializers.DB)
-	PostRouteController = routes.NewRoutePostController(PostController)
+	TransactionController = controllers.NewTransactionController(initializers.DB)
+	TransactionRouteController = routes.NewRouteTransactionController(TransactionController)
+	WebhookController = controllers.NewWebhookController()
+	WebhookRouteController = routes.NewWebhookRouteController(WebhookController)
 
 	server = gin.Default()
 }
@@ -55,14 +47,13 @@ func main() {
 
 	server.Use(cors.New(corsConfig))
 
-	router := server.Group("/api")
+	router := server.Group("/")
 	router.GET("/healthchecker", func(ctx *gin.Context) {
-		message := "Welcome to Golang with Gorm and Postgres"
+		message := "Welcome to Carbon API"
 		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": message})
 	})
 
-	AuthRouteController.AuthRoute(router)
-	UserRouteController.UserRoute(router)
-	PostRouteController.PostRoute(router)
+	TransactionRouteController.TransactionRoute(router) // 트랜잭션 라우트 연결
+	WebhookRouteController.WebhookRoute(router)         // 웹훅 라우트 연결
 	log.Fatal(server.Run(":" + config.ServerPort))
 }
