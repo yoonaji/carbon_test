@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/yoonaji/carbon/initializers"
-	"github.com/yoonaji/carbon/models"
+	"github.com/yoonaji/carbon_test/initializers"
+	"github.com/yoonaji/carbon_test/models"
 )
 
 type WebhookController struct{}

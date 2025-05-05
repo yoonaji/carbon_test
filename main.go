@@ -6,9 +6,9 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/yoonaji/carbon/controllers"
-	"github.com/yoonaji/carbon/initializers"
-	"github.com/yoonaji/carbon/routes"
+	"github.com/yoonaji/carbon_test/controllers"
+	"github.com/yoonaji/carbon_test/initializers"
+	"github.com/yoonaji/carbon_test/routes"
 )
 
 var (

@@ -1,17 +1,14 @@
 module github.com/yoonaji/carbon_test
 
-go 1.23.1
+go 1.20
 
 require (
-	github.com/gin-contrib/cors v1.7.5
-	github.com/gin-gonic/gin v1.10.0
-	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/google/uuid v1.6.0
-	github.com/spf13/viper v1.20.1
-	github.com/yoonaji/carbon v0.0.0-20250505024110-404bf82c4841
-	golang.org/x/crypto v0.37.0
-	gorm.io/driver/postgres v1.5.11
-	gorm.io/gorm v1.26.0
+	github.com/gin-contrib/cors v1.4.0
+	github.com/gin-gonic/gin v1.9.1
+	github.com/google/uuid v1.3.0
+	github.com/spf13/viper v1.16.0
+	gorm.io/driver/postgres v1.5.2
+	gorm.io/gorm v1.25.4
 )
 
 require (
@@ -47,7 +44,6 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	github.com/wpcodevo/golang-gorm-postgres v0.0.0-20240225194204-a42965d991a1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.15.0 // indirect
 	golang.org/x/net v0.38.0 // indirect

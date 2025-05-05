@@ -107,8 +107,6 @@ github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.12 h1:9LC83zGrHhuUA9l16C9AHXAqEV/2wBQ4nkvumAE65EE=
 github.com/ugorji/go/codec v1.2.12/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
-github.com/wpcodevo/golang-gorm-postgres v0.0.0-20240225194204-a42965d991a1 h1:HpzsTvx2OAeik6zJbigrYBb1kqKcmO8iohZ9IS5W2Jo=
-github.com/wpcodevo/golang-gorm-postgres v0.0.0-20240225194204-a42965d991a1/go.mod h1:gaPWTvEt/zOpdCMDtx+wdTgqF/+inprRcqPgEuHWy2M=
 github.com/yoonaji/carbon v0.0.0-20250505024110-404bf82c4841 h1:WtXkCPv7CZ4Z/YEc/p71xQR9iWto4AeS3WuBtlBmtFw=
 github.com/yoonaji/carbon v0.0.0-20250505024110-404bf82c4841/go.mod h1:jf8C6MsIposrBFL+fcyDI+1jjCW9Yih+vRKoKshLZO0=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=
