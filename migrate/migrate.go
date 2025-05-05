@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/yoonaji/carbon/initializers"
-	"github.com/yoonaji/carbon/models"
+	"github.com/yoonaji/carbon_test/initializers"
+	"github.com/yoonaji/carbon_test/models"
 )
 
 func init() {

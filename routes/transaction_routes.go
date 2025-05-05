@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/yoonaji/carbon/controllers"
+	"github.com/yoonaji/carbon_test/controllers"
 	//"github.com/yoonaji/carbon/middleware"
 )
 

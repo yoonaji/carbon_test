@@ -5,21 +5,31 @@
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binary
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Output of the go coverage tool
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependency directories
+vendor/
+
+# Environment files
+.env
+*.env
+
+# IDE specific files
+.idea/
+.vscode/
 .DS_Store
+
+# Log files
+*.log
+
 TODO.md
 logs.txt
-.idea/
 secret.md
 tmp/
-.env
 controllers/auth.controller.go
 controllers/post.controller.go
 controllers/user.controller.go
