@@ -40,3 +40,6 @@ routes/auth.routes.go
 routes/post.routes.go
 routes/user.routes.go
 utils/
+cloud_sql_proxy.exe
+cloud-sql-key.json
+cloud-sql-proxy/
