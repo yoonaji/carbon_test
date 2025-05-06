@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/yoonaji/carbon/models"
+	"github.com/yoonaji/carbon_test/models"
 	"gorm.io/gorm"
 )
 
