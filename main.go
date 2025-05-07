@@ -17,6 +17,10 @@ var (
 	TransactionRouteController routes.TransactionRouteController
 	WebhookController          controllers.WebhookController
 	WebhookRouteController     routes.WebhookRouteController
+	AuthController             controllers.AuthController
+	AuthRouteController        routes.AuthRouteController
+	UserController             controllers.UserController
+	UserRouteController        routes.UserRouteController
 )
 
 func init() {
@@ -31,6 +35,10 @@ func init() {
 	TransactionRouteController = routes.NewRouteTransactionController(TransactionController)
 	WebhookController = controllers.NewWebhookController()
 	WebhookRouteController = routes.NewWebhookRouteController(WebhookController)
+	AuthController := controllers.NewAuthController(initializers.DB)
+	AuthRouteController = routes.NewRouteAuthController(AuthController)
+	UserController := controllers.NewUserController(initializers.DB)
+	UserRouteController = routes.NewRouteUserController(UserController)
 
 	server = gin.Default()
 }
@@ -55,5 +63,9 @@ func main() {
 
 	TransactionRouteController.TransactionRoute(router) // 트랜잭션 라우트 연결
 	WebhookRouteController.WebhookRoute(router)         // 웹훅 라우트 연결
+
+	AuthRouteController.AuthRoute(router) // 인증 라우트 연결
+	UserRouteController.UserRoute(router) // 유저 라우트 연결
+
 	log.Fatal(server.Run(":" + config.ServerPort))
 }
