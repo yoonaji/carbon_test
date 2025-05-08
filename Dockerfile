@@ -1,5 +1,5 @@
 # 1. Go 빌드용 베이스 이미지
-FROM golang:1.20 AS builder
+FROM golang:1.23 AS builder
 
 WORKDIR /app
 
