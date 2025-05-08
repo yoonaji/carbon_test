@@ -15,4 +15,3 @@ models/user.model.go
 routes/auth.routes.go
 routes/post.routes.go
 routes/user.routes.go
-utils/
