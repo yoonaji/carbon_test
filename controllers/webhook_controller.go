@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -12,6 +15,10 @@ import (
 )
 
 type WebhookController struct{}
+type CategorizeResponse struct {
+	Category    string  `json:"category"`
+	CarbonScore float64 `json:"carbonScore"`
+}
 
 func NewWebhookController() WebhookController {
 	return WebhookController{}
@@ -36,6 +43,15 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 		return
 	}
 
+	payerName := fmt.Sprintf("%v", rawData["transaction_name"])
+	amount := fmt.Sprintf("%v", rawData["amount"])
+
+	categorizeResult, err := callCategorizeAPI(ctx, payerName, amount)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "분류 API 요청 실패", "error": err.Error()})
+		return
+	}
+
 	webhookTx := models.WebhookTransaction{
 		TransactionType:   fmt.Sprintf("%v", rawData["transaction_type"]),
 		BankAccountID:     fmt.Sprintf("%v", rawData["bank_account_id"]),
@@ -44,6 +60,8 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 		Amount:            uint(rawData["amount"].(float64)),
 		TransactionDate:   transactionDate,
 		TransactionName:   fmt.Sprintf("%v", rawData["transaction_name"]),
+		Category:          categorizeResult.Category,
+		CarbonScore:       categorizeResult.CarbonScore,
 	}
 
 	if err := initializers.DB.Create(&webhookTx).Error; err != nil {
@@ -61,6 +79,8 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 		Amount:            int(webhookTx.Amount),
 		TransactionDate:   webhookTx.TransactionDate,
 		TransactionName:   webhookTx.TransactionName,
+		Category:          webhookTx.Category,
+		CarbonScore:       webhookTx.CarbonScore,
 		UserID:            "system",
 	}
 
@@ -73,4 +93,44 @@ func (wc *WebhookController) ReceiveWebhook(ctx *gin.Context) {
 		"status":  "success",
 		"message": "웹훅 데이터와 거래내역이 성공적으로 저장되었습니다",
 	})
+}
+
+func callCategorizeAPI(ctx *gin.Context, payerName string, amount string) (*CategorizeResponse, error) {
+	amountStr := fmt.Sprintf("%v원", amount)
+
+	payload := map[string]string{
+		"payerName": payerName,
+		"amount":    amountStr,
+	}
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx.Request.Context(), "POST",
+		"https://ef-server-jaclg44nla-du.a.run.app/categorize",
+		bytes.NewBuffer(jsonData),
+	)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var result CategorizeResponse
+	if err := json.Unmarshal(bodyBytes, &result); err != nil {
+		return nil, err
+	}
+	return &result, nil
 }

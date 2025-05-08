@@ -11,9 +11,12 @@ COPY . ./
 RUN go build -o main .
 
 # 2. 런타임 이미지 (작고 가볍게)
-FROM debian:bullseye-slim
+FROM ubuntu:22.04
 
 WORKDIR /app
 COPY --from=builder /app/main .
+COPY --from=builder /app/app.env .
+
+EXPOSE 8080
 
 CMD ["./main"]
