@@ -3,15 +3,5 @@
 .idea
 *.log
 *.md
-.env
 test/
 docs/
-controllers/auth.controller.go
-controllers/post.controller.go
-controllers/user.controller.go
-middlewares/deserialize-user.go
-models/post.go
-models/user.model.go
-routes/auth.routes.go
-routes/post.routes.go
-routes/user.routes.go

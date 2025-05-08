@@ -12,4 +12,6 @@ type WebhookTransaction struct {
 	TransactionName   string    `json:"transaction_name"`
 	Balance           uint      `json:"balance"`
 	ProcessingDate    string    `json:"processing_date"`
+	Category          string    `gorm:"column:category;type:varchar(50)"`
+	CarbonScore       float64   `gorm:"column:carbon_score;type:float"`
 }

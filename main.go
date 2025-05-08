@@ -1,13 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/yoonaji/carbon_test/controllers"
 	"github.com/yoonaji/carbon_test/initializers"
+	"github.com/yoonaji/carbon_test/models"
 	"github.com/yoonaji/carbon_test/routes"
 )
 
@@ -30,6 +33,9 @@ func init() {
 	}
 
 	initializers.ConnectDB(&config)
+	initializers.DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
+	initializers.DB.AutoMigrate(&models.TransactionModel{}, &models.WebhookTransaction{}, &models.User{})
+	fmt.Println("👍 Migration complete")
 
 	TransactionController = controllers.NewTransactionController(initializers.DB)
 	TransactionRouteController = routes.NewRouteTransactionController(TransactionController)
@@ -67,5 +73,9 @@ func main() {
 	AuthRouteController.AuthRoute(router) // 인증 라우트 연결
 	UserRouteController.UserRoute(router) // 유저 라우트 연결
 
-	log.Fatal(server.Run(":" + config.ServerPort))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = config.ServerPort
+	}
+	log.Fatal(server.Run(":" + port))
 }
