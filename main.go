@@ -35,7 +35,7 @@ func init() {
 	TransactionRouteController = routes.NewRouteTransactionController(TransactionController)
 	WebhookController = controllers.NewWebhookController()
 	WebhookRouteController = routes.NewWebhookRouteController(WebhookController)
-	AuthController := controllers.NewAuthController(initializers.DB)
+	AuthController := controllers.NewAuthController(initializers.DB, &config)
 	AuthRouteController = routes.NewRouteAuthController(AuthController)
 	UserController := controllers.NewUserController(initializers.DB)
 	UserRouteController = routes.NewRouteUserController(UserController)

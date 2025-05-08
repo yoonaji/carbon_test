@@ -1,6 +1,7 @@
 package initializers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/spf13/viper"
@@ -39,5 +40,8 @@ func LoadConfig(path string) (config Config, err error) {
 	}
 
 	err = viper.Unmarshal(&config)
+
+	fmt.Printf("🚀 Loaded environment variables successfully\n")
+	fmt.Printf(config.DBHost)
 	return
 }

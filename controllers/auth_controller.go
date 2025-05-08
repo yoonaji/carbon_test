@@ -1,8 +1,8 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -15,11 +15,12 @@ import (
 )
 
 type AuthController struct {
-	DB *gorm.DB
+	DB     *gorm.DB
+	config *initializers.Config
 }
 
-func NewAuthController(DB *gorm.DB) AuthController {
-	return AuthController{DB}
+func NewAuthController(DB *gorm.DB, config *initializers.Config) AuthController {
+	return AuthController{DB, config}
 }
 
 func (pc *AuthController) Signup(c *gin.Context) {
@@ -64,8 +65,10 @@ func (pc *AuthController) Login(c *gin.Context) {
 		return
 	}
 
-	atPrivateKey := os.Getenv("ACCESS_TOKEN_PRIVATE_KEY")
-	rtPrivateKey := os.Getenv("REFRESH_TOKEN_PRIVATE_KEY")
+	atPrivateKey := pc.config.AccessTokenPrivateKey
+	rtPrivateKey := pc.config.RefreshTokenPrivateKey
+	log.Println("test")
+	log.Println(atPrivateKey)
 	accessTTL := 15 * time.Minute
 	refreshTTL := 7 * 24 * time.Hour
 
@@ -100,8 +103,8 @@ func (pc *AuthController) Refresh(c *gin.Context) {
 		return
 	}
 
-	atPrivateKey := os.Getenv("ACCESS_TOKEN_PRIVATE_KEY")
-	rtPublicKey := os.Getenv("REFRESH_TOKEN_PUBLIC_KEY")
+	atPrivateKey := pc.config.AccessTokenPrivateKey
+	rtPublicKey := pc.config.RefreshTokenPublicKey
 
 	claims, err := utils.ValidateToken(input.RefreshToken, rtPublicKey)
 	if err != nil {
