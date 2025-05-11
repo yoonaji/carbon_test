@@ -1,6 +1,10 @@
-오픈소스 참고하여서 짬
+gdg 1회 장기연합 sprint 챌린지 6조 BE
 
-controllers/transaction_controller : 거래내역 컨트롤러
-controllers/webhook_controller : 웹훅에서 받아오는 내역 처리
+주제 : 거래내역을 기반으로 개인의 탄소배출량을 측정하여, 이를 사용자에게 보여줌. 
+목표: 탄소배출량을 시각화하여 사용자 스스로 탄소배출량을 줄이게 하는 것. 
 
-models/transaction_model : 
+서버는 golang으로 작성되었음. 
+DB는 POSTGRESQL 사용. 
+
+로그인 및 회원가입, GEMINI API 연동 : GDG BE 박준서
+페이액션 설정 및 모델, 컨트롤러 api 구현 : GDG BE 지윤아
